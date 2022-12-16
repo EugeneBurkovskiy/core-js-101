@@ -23,9 +23,7 @@
 function Rectangle(width, height) {
   this.width = width;
   this.height = height;
-  this.getArea = function () {
-    return width * height;
-  };
+  this.getArea = () => width * height;
 }
 
 
@@ -162,12 +160,12 @@ const cssSelectorBuilder = {
   },
 };
 
-const builder = cssSelectorBuilder;
-console.log(builder.combine(
-  builder.element('p').pseudoClass('focus'),
-  '>',
-  builder.element('a').attr('href$=".png"'),
-).stringify());
+// const builder = cssSelectorBuilder;
+// console.log(builder.combine(
+//   builder.element('p').pseudoClass('focus'),
+//   '>',
+//   builder.element('a').attr('href$=".png"'),
+// ).stringify());
 
 module.exports = {
   Rectangle,
