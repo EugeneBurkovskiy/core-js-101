@@ -291,9 +291,23 @@ function reverseInteger(num) {
  *   5436468789016589 => false
  *   4916123456789012 => false
  */
-function isCreditCardNumber(/* ccn */) {
-  throw new Error('Not implemented');
+function isCreditCardNumber(ccn) {
+  const ccnArr = ccn.toString().split('').map((item) => Number(item));
+  let start;
+  if ((ccnArr.length - 1) % 2 !== 0) {
+    start = 0;
+  } else {
+    start = 1;
+  }
+  for (let i = start; i < ccnArr.length; i += 2) {
+    ccnArr[i] *= 2;
+    if (ccnArr[i] > 9) {
+      ccnArr[i] -= 9;
+    }
+  }
+  return ccnArr.reduce((sum, item) => sum + item, 0) % 10 === 0;
 }
+// console.log(isCreditCardNumber(378282246310005));
 
 /**
  * Returns the digital root of integer:
@@ -384,10 +398,24 @@ function toNaryString(num, n) {
  *   ['/web/assets/style.css', '/.bin/mocha',  '/read.me'] => '/'
  *   ['/web/favicon.ico', '/web-scripts/dump', '/verbalizer/logs'] => '/'
  */
-function getCommonDirectoryPath(/* pathes */) {
-  throw new Error('Not implemented');
+function getCommonDirectoryPath(pathes) {
+  const resArr = [];
+  const dirArr = pathes.map((item) => item.replace(/[a-z]+\d?\.[a-z]+/ig, '').split('/').map((word) => {
+    if (word === '') {
+      return '/';
+    }
+    return word;
+  }));
+  for (let i = 0; i < dirArr[0].length; i += 1) {
+    if (dirArr.every((item) => item.indexOf(dirArr[0][i]) === i)) {
+      resArr.push(dirArr[0][i]);
+    }
+  }
+  if (resArr.length < 2) {
+    return resArr.join();
+  }
+  return `/${resArr.splice(1, resArr.length - 1).join('/')}/`;
 }
-
 
 /**
  * Returns the product of two specified matrixes.
